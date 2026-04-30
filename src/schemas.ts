@@ -35,7 +35,25 @@ export const authResponseSchema = z.object({
 	})),
 })
 
+export const applicationSchema = z.object({
+	id: z.uuid(),
+	company: z.string(),
+	role: z.string(),
+	date_applied: z.date(),
+	date_updated: z.date(),
+	status: z.number(),
+	owner_id: z.uuid(),
+	description: z.string().optional(),
+	url: z.string().optional(),
+	notes: z.string().optional(),
+})
+
+export const applicationsResponseSchema = z.object({
+	data: applicationSchema.array()
+})
+
 
 export type LoginSchema = z.infer<typeof loginSchema>
 export type RegisterSchema = z.infer<typeof registerSchema>
 export type AuthResponseSchema = z.infer<typeof authResponseSchema>
+export type ApplicationsResponseSchema = z.infer<typeof applicationsResponseSchema>

@@ -8,6 +8,8 @@ import { useAuthStore } from './store/auth-store'
 import { LoginRoute } from './routes/login'
 import { RegisterRoute } from './routes/register'
 import { AppRoute } from './routes/app'
+import { api } from './lib/api'
+import { applicationsResponseSchema } from './schemas'
 
 const rootRoute = createRootRoute()
 
@@ -36,6 +38,7 @@ const appRoute = createRoute({
 			throw redirect({ to: '/login' })
 		}
 	},
+	loader: () => api.get('/api/applications', applicationsResponseSchema),
 	component: AppRoute,
 })
 

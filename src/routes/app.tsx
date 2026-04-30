@@ -1,18 +1,18 @@
-import { Button } from "@/components/ui/button"
 import { useAuthStore } from "@/store/auth-store"
-import { useNavigate } from "@tanstack/react-router"
+import { getRouteApi } from "@tanstack/react-router"
+import { LogoutButton } from "@/components/logout-button"
+
+const routeApi = getRouteApi('/app')
 
 export function AppRoute() {
-	const navigate = useNavigate()
-	const { clear, email } = useAuthStore()
-
-	const logout = () => {
-		clear()
-		navigate({ to: '/login' })
-	}
+	const { email } = useAuthStore()
+	const data = routeApi.useLoaderData()
 
 	return <div className="flex flex-col w-full min-h-screen">
-		<h1>Welcome, {email}!</h1>
-		<Button onClick={logout}>Logout</Button>
+		<header className="p-4 flex items-center justify-between">
+			<h1>Welcome, {email}!</h1>
+			<LogoutButton />
+		</header>
+		<code>{JSON.stringify(data)}</code>
 	</div>
 }
