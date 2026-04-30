@@ -5,6 +5,9 @@ import {
 	redirect
 } from '@tanstack/react-router'
 import { useAuthStore } from './store/auth-store'
+import { LoginRoute } from './routes/login'
+import { RegisterRoute } from './routes/register'
+import { AppRoute } from './routes/app'
 
 const rootRoute = createRootRoute()
 
@@ -16,13 +19,13 @@ const loginRoute = createRoute({
 			throw redirect({ to: '/app' })
 		}
 	},
-	component: () => <div>Login Page</div>,
+	component: LoginRoute,
 })
 
 const registerRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: '/register',
-	component: () => <div>Register Page</div>,
+	component: RegisterRoute,
 })
 
 const appRoute = createRoute({
@@ -33,7 +36,7 @@ const appRoute = createRoute({
 			throw redirect({ to: '/login' })
 		}
 	},
-	component: () => <div>Welcome to the App!</div>,
+	component: AppRoute,
 })
 
 const indexRoute = createRoute({
