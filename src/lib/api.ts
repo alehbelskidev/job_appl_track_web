@@ -9,7 +9,7 @@ interface TokensDTO {
 
 let refreshPromise: Promise<string> | null = null
 
-const BASE_URL = 'http://localhost:3001'
+const API_URL = import.meta.env.VITE_API_URL
 
 async function refreshAccessToken(): Promise<string> {
 	if (refreshPromise) return refreshPromise
@@ -20,7 +20,7 @@ async function refreshAccessToken(): Promise<string> {
 		if (!refreshToken) throw new Error('No refresh token')
 
 		const res = await ky.post('/auth/refresh', {
-			prefix: BASE_URL,
+			prefix: API_URL,
 			json: { refresh_token: refreshToken },
 		}).json<TokensDTO>()
 
@@ -40,7 +40,7 @@ async function refreshAccessToken(): Promise<string> {
 
 function createApiClient(): KyInstance {
 	return ky.create({
-		prefix: BASE_URL,
+		prefix: API_URL,
 		hooks: {
 			beforeRequest: [
 				(state) => {
