@@ -56,4 +56,5 @@ export const applicationsResponseSchema = z.object({
 export type LoginSchema = z.infer<typeof loginSchema>
 export type RegisterSchema = z.infer<typeof registerSchema>
 export type AuthResponseSchema = z.infer<typeof authResponseSchema>
+export type ApplicationSchema = z.infer<typeof applicationSchema>
 export type ApplicationsResponseSchema = z.infer<typeof applicationsResponseSchema>
