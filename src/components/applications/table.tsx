@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/table"
 import { useColumns } from "./columns"
 import type { ApplicationSchema } from "@/schemas"
+import { useAppStore } from "@/store/app-store"
 
 interface ApplicationsTableProps {
 	data: ApplicationSchema[]
@@ -22,6 +23,7 @@ interface ApplicationsTableProps {
 export function ApplicationsTable({
 	data,
 }: ApplicationsTableProps) {
+	const { setApplication } = useAppStore()
 	const columns = useColumns()
 	const table = useReactTable({
 		data,
@@ -68,9 +70,10 @@ export function ApplicationsTable({
 						<TableRow
 							key={row.id}
 							data-state={row.getIsSelected() && "selected"}
+							className="cursor-pointer"
 						>
 							{row.getVisibleCells().map((cell) => (
-								<TableCell key={cell.id}>
+								<TableCell key={cell.id} onClick={() => cell.id !== 'status' && setApplication(row.original)}>
 									{flexRender(cell.column.columnDef.cell, cell.getContext())}
 								</TableCell>
 							))}

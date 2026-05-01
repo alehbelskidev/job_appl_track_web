@@ -3,6 +3,7 @@ import { getRouteApi } from "@tanstack/react-router"
 import { LogoutButton } from "@/components/logout-button"
 import { ApplicationsTable } from "@/components/applications/table"
 import { CreateApplicationSheet } from "@/components/applications/create-sheet"
+import { ApplicationDetailsDialog } from "@/components/applications/details-dialog"
 
 const routeApi = getRouteApi('/app')
 
@@ -24,6 +25,7 @@ export function AppRoute() {
 					<ApplicationsTable data={data} />
 				</div>
 			</div>
+			<ApplicationDetailsDialog />
 		</div>
 	)
 }
