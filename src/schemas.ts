@@ -39,10 +39,17 @@ export const applicationSchema = z.object({
 	id: z.uuid(),
 	company: z.string(),
 	role: z.string(),
-	date_applied: z.date(),
-	date_updated: z.date(),
+	date_applied: z.string(),
+	date_updated: z.string().nullable(),
 	status: z.number(),
-	owner_id: z.uuid(),
+	description: z.string().optional(),
+	url: z.string().optional(),
+	notes: z.string().optional(),
+})
+
+export const createApplicationSchema = z.object({
+	company: z.string(),
+	role: z.string(),
 	description: z.string().optional(),
 	url: z.string().optional(),
 	notes: z.string().optional(),
@@ -57,4 +64,5 @@ export type LoginSchema = z.infer<typeof loginSchema>
 export type RegisterSchema = z.infer<typeof registerSchema>
 export type AuthResponseSchema = z.infer<typeof authResponseSchema>
 export type ApplicationSchema = z.infer<typeof applicationSchema>
+export type CreateApplicationSchema = z.infer<typeof createApplicationSchema>
 export type ApplicationsResponseSchema = z.infer<typeof applicationsResponseSchema>

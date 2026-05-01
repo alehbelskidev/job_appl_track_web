@@ -33,5 +33,14 @@ export const columns: ColumnDef<ApplicationSchema>[] = [
 	{
 		accessorKey: 'date_updated',
 		header: 'Last Updated',
+		cell: ({ getValue }) => {
+			const value = getValue()
+
+			if (!value) {
+				return "N/A"
+			}
+
+			return value
+		}
 	},
 ]
