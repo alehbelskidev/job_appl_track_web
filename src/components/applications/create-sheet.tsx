@@ -1,7 +1,6 @@
 import { useState } from "react"
 import {
 	Sheet,
-	SheetClose,
 	SheetContent,
 	SheetDescription,
 	SheetFooter,
@@ -14,6 +13,7 @@ import {
 	FieldLabel,
 	FieldError,
 } from "@/components/ui/field"
+import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -26,6 +26,7 @@ import { useMutation } from "@tanstack/react-query"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "@tanstack/react-router"
+import { cn } from "@/lib/utils"
 
 export function CreateApplicationSheet() {
 	const [open, setOpen] = useState(false)
@@ -60,11 +61,10 @@ export function CreateApplicationSheet() {
 	}
 
 	return (
-		<Sheet open={open}>
-			<SheetTrigger onClick={() => setOpen(true)}><HugeiconsIcon icon={NoteAddIcon} /></SheetTrigger>
+		<Sheet open={open} onOpenChange={o => setOpen(o)}>
+			<SheetTrigger onClick={() => setOpen(true)} className={cn("flex items-center gap-2", buttonVariants({ variant: "outline" }))}><HugeiconsIcon icon={NoteAddIcon} /> Application</SheetTrigger>
 			<SheetContent>
 				<SheetHeader>
-					<SheetClose onClick={() => setOpen(false)} />
 					<SheetTitle>Are you absolutely sure?</SheetTitle>
 					<SheetDescription>This action cannot be undone.</SheetDescription>
 				</SheetHeader>

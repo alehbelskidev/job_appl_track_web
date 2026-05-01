@@ -14,11 +14,13 @@ export function AppRoute() {
 		<div className="flex flex-col w-full min-h-screen">
 			<header className="p-4 flex items-center justify-between">
 				<h1>Welcome, {email}!</h1>
-				<LogoutButton />
+				<div className="flex items-center gap-4">
+					<CreateApplicationSheet />
+					<LogoutButton />
+				</div>
 			</header>
 			<div className="flex-1 p-4">
 				<div className="overflow-hidden rounded-md border">
-					<h2 className="flex items-center justify-between p-2 text-lg font-semibold">Applications <CreateApplicationSheet /></h2>
 					<ApplicationsTable data={data} />
 				</div>
 			</div>
