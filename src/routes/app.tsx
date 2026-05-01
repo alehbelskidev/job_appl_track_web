@@ -9,7 +9,6 @@ const routeApi = getRouteApi('/app')
 export function AppRoute() {
 	const { email } = useAuthStore()
 	const { data } = routeApi.useLoaderData()
-	console.log('data', data)
 
 	return (
 		<div className="flex flex-col w-full min-h-screen">

@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
 	Sheet,
 	SheetClose,
@@ -20,13 +21,14 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { NoteAddIcon, Tick02Icon } from "@hugeicons/core-free-icons"
 import { api } from '@/lib/api'
 import { toast } from "sonner"
-import { applicationSchema, type CreateApplicationSchema, createApplicationSchema } from "@/schemas"
+import { applicationResponseSchema, type CreateApplicationSchema, createApplicationSchema } from "@/schemas"
 import { useMutation } from "@tanstack/react-query"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "@tanstack/react-router"
 
 export function CreateApplicationSheet() {
+	const [open, setOpen] = useState(false)
 	const router = useRouter()
 	const form = useForm<CreateApplicationSchema>({
 		resolver: zodResolver(createApplicationSchema),
@@ -41,12 +43,14 @@ export function CreateApplicationSheet() {
 
 	const { mutate } = useMutation({
 		mutationKey: ['create-application'],
-		mutationFn: (data: CreateApplicationSchema) => api.post('/api/applications', data, applicationSchema),
+		mutationFn: (data: CreateApplicationSchema) => api.post('/api/applications', data, applicationResponseSchema),
 		onError: (err) => {
+			console.log(err)
 			toast.error(err.message)
 		},
-		onSuccess: (data) => {
+		onSuccess: ({ data }) => {
 			router.invalidate()
+			setOpen(false)
 			toast.success(`Application for ${data.role} in ${data.company} has been created!`)
 		},
 	})
@@ -56,11 +60,11 @@ export function CreateApplicationSheet() {
 	}
 
 	return (
-		<Sheet>
-			<SheetTrigger><HugeiconsIcon icon={NoteAddIcon} /></SheetTrigger>
+		<Sheet open={open}>
+			<SheetTrigger onClick={() => setOpen(true)}><HugeiconsIcon icon={NoteAddIcon} /></SheetTrigger>
 			<SheetContent>
 				<SheetHeader>
-					<SheetClose />
+					<SheetClose onClick={() => setOpen(false)} />
 					<SheetTitle>Are you absolutely sure?</SheetTitle>
 					<SheetDescription>This action cannot be undone.</SheetDescription>
 				</SheetHeader>

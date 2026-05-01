@@ -1,6 +1,7 @@
 import {
 	flexRender,
 	getCoreRowModel,
+	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table"
 import {
@@ -11,7 +12,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table"
-import { columns } from "./columns"
+import { useColumns } from "./columns"
 import type { ApplicationSchema } from "@/schemas"
 
 interface ApplicationsTableProps {
@@ -21,10 +22,24 @@ interface ApplicationsTableProps {
 export function ApplicationsTable({
 	data,
 }: ApplicationsTableProps) {
+	const columns = useColumns()
 	const table = useReactTable({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		initialState: {
+			sorting: [
+				{
+					id: 'date_updated',
+					desc: true,
+				},
+				{
+					id: 'date_applied',
+					desc: true,
+				},
+			],
+		},
 	})
 
 	return (
