@@ -17,6 +17,14 @@ import { useRouter } from "@tanstack/react-router"
 import { format } from "date-fns"
 
 const CELL_STATUS = ['Applied', 'Ghosted', 'Rejected', 'Connected', 'Failed']
+const STATUS_COLORS: Record<string, string> = {
+	applied: "text-blue-500",
+	ghosted: "text-slate-400",
+	rejected: "text-red-500",
+	connected: "text-emerald-500",
+	failed: "text-orange-500",
+};
+
 
 export const useColumns = (): ColumnDef<ApplicationSchema>[] => {
 	const router = useRouter()
@@ -77,7 +85,12 @@ export const useColumns = (): ColumnDef<ApplicationSchema>[] => {
 				return (
 					<Select value={value} onValueChange={value => updateApplication(original.id, value)}>
 						<SelectTrigger className="w-full max-w-48">
-							<SelectValue />
+							<div className="flex items-center gap-2">
+								<div className={`h-2 w-2 rounded-full fill-current ${STATUS_COLORS[value] || "bg-gray-400"}`}
+									style={{ backgroundColor: 'currentColor' }}
+								/>
+								<SelectValue />
+							</div>
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
