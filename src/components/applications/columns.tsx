@@ -25,7 +25,6 @@ const STATUS_COLORS: Record<string, string> = {
 	failed: "text-orange-500",
 };
 
-
 export const useColumns = (): ColumnDef<ApplicationSchema>[] => {
 	const router = useRouter()
 	const { mutate } = useMutation({
@@ -59,20 +58,21 @@ export const useColumns = (): ColumnDef<ApplicationSchema>[] => {
 			accessorKey: 'role',
 			header: 'Role',
 		},
-		{
-			id: 'description',
-			accessorKey: 'description',
-			header: 'Description',
-		},
+		// FYI: Can't decide ATM whether I need that in table
+		// {
+		// 	id: 'description',
+		// 	accessorKey: 'description',
+		// 	header: 'Description',
+		// },
+		// {
+		// 	id: 'notes',
+		// 	accessorKey: 'notes',
+		// 	header: 'Notes',
+		// },
 		{
 			id: 'url',
 			accessorKey: 'url',
 			header: 'Url',
-		},
-		{
-			id: 'notes',
-			accessorKey: 'notes',
-			header: 'Notes',
 		},
 		{
 			id: 'status',
