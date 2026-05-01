@@ -46,7 +46,6 @@ export function CreateApplicationSheet() {
 		mutationKey: ['create-application'],
 		mutationFn: (data: CreateApplicationSchema) => api.post('/api/applications', data, applicationResponseSchema),
 		onError: (err) => {
-			console.log(err)
 			toast.error(err.message)
 		},
 		onSuccess: ({ data }) => {
