@@ -69,6 +69,9 @@ export const applicationsResponseSchema = z.object({
 	data: applicationSchema.array(),
 })
 
+export const deleteApplicationResponseSchema = z.object({
+	data: z.boolean()
+})
 
 export type LoginSchema = z.infer<typeof loginSchema>
 export type RegisterSchema = z.infer<typeof registerSchema>

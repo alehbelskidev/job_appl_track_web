@@ -9,12 +9,28 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import { type UpdateApplicationSchema, applicationResponseSchema } from "@/schemas"
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { type UpdateApplicationSchema, applicationResponseSchema, deleteApplicationResponseSchema } from "@/schemas"
 import { api } from "@/lib/api"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { useRouter } from "@tanstack/react-router"
 import { format } from "date-fns"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { RowDeleteIcon, EditTableIcon } from "@hugeicons/core-free-icons"
+import { useAppStore } from "@/store/app-store"
+import { cn } from "@/lib/utils"
 
 const CELL_STATUS = ['Applied', 'Ghosted', 'Rejected', 'Connected', 'Failed']
 const STATUS_COLORS: Record<string, string> = {
@@ -26,8 +42,9 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export const useColumns = (): ColumnDef<ApplicationSchema>[] => {
+	const { setApplication } = useAppStore()
 	const router = useRouter()
-	const { mutate } = useMutation({
+	const { mutate: mutateUpdate } = useMutation({
 		mutationKey: ['update-application'],
 		mutationFn: (data: UpdateApplicationSchema & { id: string }) => api.patch(
 			`/api/applications/${data.id}/status`,
@@ -41,10 +58,27 @@ export const useColumns = (): ColumnDef<ApplicationSchema>[] => {
 		}
 	})
 
+	const { mutate: mutateDelete } = useMutation({
+		mutationKey: ['delete-application'],
+		mutationFn: (data: { id: string }) => api.delete(
+			`/api/applications/${data.id}`,
+			deleteApplicationResponseSchema,
+		),
+		onError: (e) => toast.error(e.message),
+		onSuccess: ({ data }) => {
+			if (data) {
+				toast.success(`Application has been deleted`)
+				router.invalidate()
+			} else {
+				toast.error("Something went wrong!")
+			}
+		}
+	})
+
 	const updateApplication = (id: string, value: string) => {
 		const status = CELL_STATUS.indexOf(value.charAt(0).toUpperCase() + value.slice(1))
 
-		mutate({ id, status })
+		mutateUpdate({ id, status })
 	}
 
 	return [
@@ -123,6 +157,57 @@ export const useColumns = (): ColumnDef<ApplicationSchema>[] => {
 				}
 
 				return format(value as string, 'dd MMM yyyy HH:mm')
+			}
+		},
+		{
+			id: 'actions',
+			header: 'Actions',
+			cell: ({ row }) => {
+				return (
+					<>
+						<Button
+							size="icon"
+							onClick={() => setApplication(row.original)}
+							variant="ghost"
+						>
+							<HugeiconsIcon icon={EditTableIcon} />
+						</Button>
+						<AlertDialog>
+							<AlertDialogTrigger asChild>
+								<Button
+									className="ml-2"
+									variant="destructive"
+									size="icon"
+								>
+									<HugeiconsIcon icon={RowDeleteIcon} />
+								</Button>
+							</AlertDialogTrigger>
+							<AlertDialogContent>
+								<AlertDialogHeader>
+									<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+									<AlertDialogDescription>
+										This action cannot be undone. This will permanently delete your
+										application from our servers.
+									</AlertDialogDescription>
+								</AlertDialogHeader>
+								<AlertDialogFooter>
+									<AlertDialogCancel>Cancel</AlertDialogCancel>
+									<AlertDialogAction
+										asChild
+									>
+										<Button
+											className="text-red-500"
+											variant="destructive"
+											onClick={() => mutateDelete({ id: row.original.id })}
+										>
+											Delete
+										</Button>
+									</AlertDialogAction>
+								</AlertDialogFooter>
+							</AlertDialogContent>
+						</AlertDialog>
+					</>
+				)
 			}
 		},
 	]
