@@ -53,7 +53,7 @@ export const createApplicationSchema = z.object({
 	company: z.string(),
 	role: z.string(),
 	description: z.string().optional(),
-	url: z.string().optional(),
+	url: z.httpUrl().optional(),
 	notes: z.string().optional(),
 })
 
