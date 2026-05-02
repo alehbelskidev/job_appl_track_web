@@ -21,6 +21,8 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
 
+		/* to ignore baseUrl warning */
+		"ignoreDeprecations": "6.0",
 		"baseUrl": ".",
     "paths": {
       "@/*": [

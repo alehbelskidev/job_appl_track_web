@@ -20,7 +20,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { type UpdateApplicationSchema, applicationResponseSchema, deleteApplicationResponseSchema } from "@/schemas"
 import { api } from "@/lib/api"
 import { useMutation } from "@tanstack/react-query"
@@ -30,7 +30,6 @@ import { format } from "date-fns"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { RowDeleteIcon, EditTableIcon } from "@hugeicons/core-free-icons"
 import { useAppStore } from "@/store/app-store"
-import { cn } from "@/lib/utils"
 
 const CELL_STATUS = ['Applied', 'Ghosted', 'Rejected', 'Connected', 'Failed']
 const STATUS_COLORS: Record<string, string> = {
