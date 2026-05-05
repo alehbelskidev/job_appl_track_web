@@ -48,6 +48,7 @@ export const applicationSchema = z.object({
 	owner_id: z.string().optional()
 })
 
+export const importApplicationSchema = applicationSchema.omit({ owner_id: true })
 
 export const createApplicationSchema = z.object({
 	company: z.string(),
@@ -56,6 +57,7 @@ export const createApplicationSchema = z.object({
 	url: z.httpUrl().optional(),
 	notes: z.string().optional(),
 })
+
 export const createApplicationAISchema = z.object({
 	url: z.url(),
 	notes: z.string().optional()
@@ -81,6 +83,7 @@ export type LoginSchema = z.infer<typeof loginSchema>
 export type RegisterSchema = z.infer<typeof registerSchema>
 export type AuthResponseSchema = z.infer<typeof authResponseSchema>
 export type ApplicationSchema = z.infer<typeof applicationSchema>
+export type ImportApplicationSchema = z.infer<typeof importApplicationSchema>
 export type CreateApplicationSchema = z.infer<typeof createApplicationSchema>
 export type CreateApplicationAISchema = z.infer<typeof createApplicationAISchema>
 export type UpdateApplicationSchema = z.infer<typeof updateApplicationSchema>

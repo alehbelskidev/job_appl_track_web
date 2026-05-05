@@ -4,6 +4,7 @@ import { CreateApplicationSheet } from "@/components/applications/create-sheet"
 import { CreateApplicationAISheet } from "@/components/applications/create-ai-sheet"
 import { ApplicationDetailsDialog } from "@/components/applications/details-dialog"
 import { DownloadDataBtn } from "@/components/applications/download-data-btn"
+import { ImportDataBtn } from "@/components/applications/import-data-btn"
 import { UserMenu } from "@/components/user/menu"
 
 const routeApi = getRouteApi('/app')
@@ -18,6 +19,7 @@ export function AppRoute() {
 				<UserMenu />
 			</header>
 			<div className="flex items-center gap-4 p-4">
+				<ImportDataBtn />
 				<DownloadDataBtn data={data} />
 				<CreateApplicationAISheet />
 				<CreateApplicationSheet />
