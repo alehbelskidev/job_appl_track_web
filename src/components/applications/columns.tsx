@@ -90,22 +90,7 @@ export const useColumns = (): ColumnDef<ApplicationSchema>[] => {
 			id: 'role',
 			accessorKey: 'role',
 			header: 'Role',
-		},
-		// FYI: Can't decide ATM whether I need that in table
-		// {
-		// 	id: 'description',
-		// 	accessorKey: 'description',
-		// 	header: 'Description',
-		// },
-		// {
-		// 	id: 'notes',
-		// 	accessorKey: 'notes',
-		// 	header: 'Notes',
-		// },
-		{
-			id: 'url',
-			accessorKey: 'url',
-			header: 'Url',
+			cell: ({ row }) => <a href={row.original.url} className="text-primary underline hover:text-primary/70">{row.original.role}</a>
 		},
 		{
 			id: 'status',

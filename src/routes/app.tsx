@@ -3,6 +3,7 @@ import { getRouteApi } from "@tanstack/react-router"
 import { LogoutButton } from "@/components/logout-button"
 import { ApplicationsTable } from "@/components/applications/table"
 import { CreateApplicationSheet } from "@/components/applications/create-sheet"
+import { CreateApplicationAISheet } from "@/components/applications/create-ai-sheet"
 import { ApplicationDetailsDialog } from "@/components/applications/details-dialog"
 
 const routeApi = getRouteApi('/app')
@@ -16,6 +17,7 @@ export function AppRoute() {
 			<header className="p-4 flex items-center justify-between">
 				<h1>Welcome, {email}!</h1>
 				<div className="flex items-center gap-4">
+					<CreateApplicationAISheet />
 					<CreateApplicationSheet />
 					<LogoutButton />
 				</div>

@@ -16,7 +16,7 @@ export function ApplicationDetailsDialog() {
 
 	return (
 		<Dialog open={true} onOpenChange={o => !o && setApplication(null)}>
-			<DialogContent>
+			<DialogContent className="min-w-full sm:min-w-2/3">
 				<DialogHeader>
 					<DialogTitle>{application.role}</DialogTitle>
 					<DialogDescription>At {application.url ? (
@@ -26,8 +26,15 @@ export function ApplicationDetailsDialog() {
 					)}</DialogDescription>
 				</DialogHeader>
 
-				{application.description && <p>{application.description}</p>}
-				{application.notes && <p>{application.notes}</p>}
+				<article>
+					<h3 className="font-semibold">Description</h3>
+					{application.description ? <p dangerouslySetInnerHTML={{ __html: application.description }}></p> : 'N/A'}
+				</article>
+
+				<article>
+					<h3 className="font-semibold">Notes</h3>
+					{application.notes ? <p>{application.notes}</p> : 'N/A'}
+				</article>
 			</DialogContent>
 		</Dialog>
 	)

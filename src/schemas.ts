@@ -56,6 +56,10 @@ export const createApplicationSchema = z.object({
 	url: z.httpUrl().optional(),
 	notes: z.string().optional(),
 })
+export const createApplicationAISchema = z.object({
+	url: z.url(),
+	notes: z.string().optional()
+})
 
 export const updateApplicationSchema = z.object({
 	status: z.number(),
@@ -78,6 +82,7 @@ export type RegisterSchema = z.infer<typeof registerSchema>
 export type AuthResponseSchema = z.infer<typeof authResponseSchema>
 export type ApplicationSchema = z.infer<typeof applicationSchema>
 export type CreateApplicationSchema = z.infer<typeof createApplicationSchema>
+export type CreateApplicationAISchema = z.infer<typeof createApplicationAISchema>
 export type UpdateApplicationSchema = z.infer<typeof updateApplicationSchema>
 export type ApplicationResponseSchema = z.infer<typeof applicationResponseSchema>
 export type ApplicationsResponseSchema = z.infer<typeof applicationsResponseSchema>
