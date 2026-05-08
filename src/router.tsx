@@ -8,6 +8,8 @@ import { useAuthStore } from './store/auth-store'
 import { LoginRoute } from './routes/login'
 import { RegisterRoute } from './routes/register'
 import { AppRoute } from './routes/app'
+import { SettingsRoute } from './routes/settings'
+import { DashboardRoute } from './routes/dashboard'
 import { api } from './lib/api'
 import { applicationsResponseSchema } from './schemas'
 
@@ -18,7 +20,7 @@ const loginRoute = createRoute({
 	path: '/login',
 	beforeLoad: () => {
 		if (useAuthStore.getState().isAuthenticated) {
-			throw redirect({ to: '/app' })
+			throw redirect({ to: '/app/dashboard' })
 		}
 	},
 	component: LoginRoute,
@@ -38,16 +40,29 @@ const appRoute = createRoute({
 			throw redirect({ to: '/login' })
 		}
 	},
-	loader: () => api.get('/api/applications', applicationsResponseSchema),
 	component: AppRoute,
 })
+
+const dashboardRoute = createRoute({
+	getParentRoute: () => appRoute,
+	path: 'dashboard',
+	loader: () => api.get('/api/applications', applicationsResponseSchema),
+	component: DashboardRoute,
+})
+
+const settingsRoute = createRoute({
+	getParentRoute: () => appRoute,
+	path: 'settings',
+	component: SettingsRoute,
+})
+
 
 const indexRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: '/',
 	beforeLoad: () => {
 		const auth = useAuthStore.getState().isAuthenticated
-		throw redirect({ to: auth ? '/app' : '/login' })
+		throw redirect({ to: auth ? '/app/dashboard' : '/login' })
 	},
 })
 
@@ -55,7 +70,9 @@ const routeTree = rootRoute.addChildren([
 	indexRoute,
 	loginRoute,
 	registerRoute,
-	appRoute
+	appRoute,
+	dashboardRoute,
+	settingsRoute,
 ])
 
 export const router = createRouter({

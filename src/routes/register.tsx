@@ -50,7 +50,7 @@ const useRegisterMutation = () => {
 				refreshToken: data.tokens.refresh_token,
 				isAuthenticated: true,
 			})
-			navigate({ to: '/app' })
+			navigate({ to: '/app/dashboard' })
 		},
 	})
 }

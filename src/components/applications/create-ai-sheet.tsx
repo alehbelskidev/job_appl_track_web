@@ -27,6 +27,7 @@ import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "@tanstack/react-router"
 import { cn } from "@/lib/utils"
+import { Spinner } from "@/components/ui/spinner"
 
 export function CreateApplicationAISheet() {
 	const [open, setOpen] = useState(false)
@@ -39,7 +40,7 @@ export function CreateApplicationAISheet() {
 		}
 	})
 
-	const { mutate } = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationKey: ['create-application'],
 		mutationFn: (data: CreateApplicationAISchema) => api.post('/api/applications/ai', data, applicationResponseSchema),
 		onError: (err) => {
@@ -88,7 +89,7 @@ export function CreateApplicationAISheet() {
 						control={form.control}
 						render={({ field, fieldState }) => (
 							<Field data-invalid={fieldState.invalid}>
-								<FieldLabel htmlFor={field.name}>Url</FieldLabel>
+								<FieldLabel htmlFor={field.name}>Notes*</FieldLabel>
 								<Textarea
 									{...field}
 									id={field.name}
@@ -102,8 +103,8 @@ export function CreateApplicationAISheet() {
 				</form>
 
 				<SheetFooter>
-					<Button form="create-application">
-						<HugeiconsIcon icon={Tick02Icon} />
+					<Button form="create-application" disabled={isPending}>
+						{isPending ? <Spinner /> : <HugeiconsIcon icon={Tick02Icon} />}
 
 						Save</Button>
 				</SheetFooter>
