@@ -52,6 +52,13 @@ export function CreateApplicationSheet() {
 			router.invalidate()
 			setOpen(false)
 			toast.success(`Application for ${data.role} in ${data.company} has been created!`)
+			form.reset({
+				company: "",
+				role: "",
+				description: "",
+				url: "",
+				notes: "",
+			})
 		},
 	})
 

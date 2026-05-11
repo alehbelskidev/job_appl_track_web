@@ -50,6 +50,10 @@ export function CreateApplicationAISheet() {
 			router.invalidate()
 			setOpen(false)
 			toast.success(`Application for ${data.role} in ${data.company} has been created!`)
+			form.reset({
+				url: "",
+				notes: "",
+			})
 		},
 	})
 
