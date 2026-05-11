@@ -75,7 +75,7 @@ export function CreateApplicationSheet() {
 					<SheetDescription>This action cannot be undone.</SheetDescription>
 				</SheetHeader>
 
-				<form id="create-application" onSubmit={form.handleSubmit(onSubmit)} className="p-4 flex flex-col gap-4">
+				<form id="create-application" onSubmit={form.handleSubmit(onSubmit)} className="p-4 flex flex-col gap-4 overflow-y-auto">
 					<Controller
 						name="company"
 						control={form.control}
@@ -120,6 +120,9 @@ export function CreateApplicationSheet() {
 									{...field}
 									id={field.name}
 									aria-invalid={fieldState.invalid}
+									wrap="hard"
+									rows={10}
+									className="!min-h-12 overflow-y-hidden"
 								/>
 								{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 							</Field>
